@@ -1,6 +1,6 @@
 # react-native-context-menu
 
-React Native implementation of iOS context menu - replicates the full set of animations, and provides extensive support for customization.
+React Native implementation of iOS context menu - replicates the full set of animations (bounce, haptics, background shrink and blur, etc.), and provides extensive support for customization of menu items and animations.
 
 https://user-images.githubusercontent.com/17365107/211397217-63fa501c-481e-4434-9e52-1e8b491f21c9.mov
 
