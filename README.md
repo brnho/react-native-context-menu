@@ -124,3 +124,6 @@ The `icon` prop is a object with the following fields:
 | size | number | Yes | Size of icon | 
 
 (See https://icons.expo.fyi/ for a list of icon types and names)
+
+## Demo
+For a full example, see https://github.com/brnho/Context-Menu-Demo.
