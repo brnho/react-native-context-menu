@@ -4,8 +4,7 @@ import { PortalProvider } from "@gorhom/portal";
 import BackgroundContext from "./BackgroundContext";
 
 const ContextMenuProvider = ({
-    setScrollEnabled,
-    children,
+    setScrollEnabled = null,
     SCREEN_SHRINK_FACTOR = 0.97,
     EXPAND_FACTOR = 1.05,
     FADE_SPEED = 200,
@@ -15,6 +14,7 @@ const ContextMenuProvider = ({
     DIVIDER_HEIGHT = 1,
     MENU_WIDTH = 200,
     MENU_MARGIN = 7,
+    children,
 }) => {
     const scaleAnim = useRef(new Animated.Value(1)).current;
     const shrinkScreenAnimation = Animated.timing(scaleAnim, {

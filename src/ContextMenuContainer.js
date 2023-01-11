@@ -43,7 +43,9 @@ const ContextMenuContainer = ({
 
     const handleLongPress = () => {
         // prevent flatlist from scrolling
-        setScrollEnabled(false);
+        if(setScrollEnabled) {
+            setScrollEnabled(false);
+        }
         // measure dimensions of child element
         view.current.measure((fx, fy, width, height, px, py) => {
             setDimensions({

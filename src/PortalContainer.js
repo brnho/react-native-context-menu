@@ -121,7 +121,9 @@ const PortalContainer = ({ dimensions, setShowPortal, menuItems, borderRadius, c
             undoTranslateAnimation,
             restoreScreenAnimation,
         ]).start(() => {
-            setScrollEnabled(true);
+            if (setScrollEnabled) {
+                setScrollEnabled(true);
+            }
             setShowPortal(false);
         });
     };
