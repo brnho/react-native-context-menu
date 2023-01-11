@@ -1,9 +1,9 @@
 {
   "name": "@brnho/react-native-context-menu",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "repository": {
-    "url": "https://github.com/brnho/loop",
+    "url": "https://github.com/brnho/react-native-context-menu",
     "type": "git"
   },
   "license": "MIT",

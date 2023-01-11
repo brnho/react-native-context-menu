@@ -1,12 +1,17 @@
-import { View, Animated } from "react-native";
+import { View, Pressable } from "react-native";
 import React, { useState, useRef, useContext } from "react";
-import { TouchableHighlight } from "react-native-gesture-handler";
 import PortalContainer from "./PortalContainer";
 import BackgroundContext from "./BackgroundContext";
 
-const AnimatedTouchable = Animated.createAnimatedComponent(TouchableHighlight);
-
-const ContextMenuContainer = ({ marginTop=0, marginRight=0, marginBottom=0, marginLeft=0, menuItems, children }) => {
+const ContextMenuContainer = ({
+    marginTop = 0,
+    marginRight = 0,
+    marginBottom = 0,
+    marginLeft = 0,
+    borderRadius = 0,
+    menuItems,
+    children,
+}) => {
     const { setScrollEnabled } = useContext(BackgroundContext);
     const [showPortal, setShowPortal] = useState(false);
     const [dimensions, setDimensions] = useState({
@@ -15,9 +20,29 @@ const ContextMenuContainer = ({ marginTop=0, marginRight=0, marginBottom=0, marg
         width: null,
         height: null,
     });
+    const [showOverlay, setShowOverlay] = useState(false);
+
+    const handlePressIn = () => {
+        // prevent re-measuring and thus re-rendering if user continues swiping around after long press
+        if (!showPortal) {
+            view.current.measure((fx, fy, width, height, px, py) => {
+                setDimensions({
+                    x: px,
+                    y: py,
+                    width: width,
+                    height: height,
+                });
+            });
+            setShowOverlay(true);
+        }
+    };
+
+    const handlePressOut = () => {
+        setShowOverlay(false);
+    };
 
     const handleLongPress = () => {
-        // prevent flatlist from scrolling 
+        // prevent flatlist from scrolling
         setScrollEnabled(false);
         // measure dimensions of child element
         view.current.measure((fx, fy, width, height, px, py) => {
@@ -48,14 +73,30 @@ const ContextMenuContainer = ({ marginTop=0, marginRight=0, marginBottom=0, marg
                     opacity: showPortal ? 0 : 1,
                 }}
             >
-                <AnimatedTouchable
-                    activeOpacity={0.8}
-                    style={{ borderRadius: 5 }}
+                <Pressable
+                    style={{ borderRadius: borderRadius }}
                     delayLongPress={350}
                     onLongPress={showPortal ? null : handleLongPress}
+                    onPressIn={handlePressIn}
+                    onPressOut={handlePressOut}
                 >
                     {children}
-                </AnimatedTouchable>
+                </Pressable>
+                {/* cover child with dark tinted overlay when pressed */}
+                {showOverlay ? (
+                    <View
+                        style={{
+                            position: "absolute",
+                            left: 0,
+                            top: 0,
+                            height: dimensions.height,
+                            width: dimensions.width,
+                            backgroundColor: "black",
+                            opacity: 0.2,
+                            borderRadius: borderRadius,
+                        }}
+                    />
+                ) : null}
             </View>
 
             {/* Render a duplicate, portal-wrapped child upon longPress */}
@@ -65,6 +106,7 @@ const ContextMenuContainer = ({ marginTop=0, marginRight=0, marginBottom=0, marg
                     showPortal={showPortal}
                     setShowPortal={setShowPortal}
                     menuItems={menuItems}
+                    borderRadius={borderRadius}
                 >
                     {children}
                 </PortalContainer>

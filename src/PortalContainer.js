@@ -9,14 +9,14 @@ import BackgroundContext from "./BackgroundContext";
 const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
 
 
-const PortalContainer = ({ dimensions, setShowPortal, menuItems, children }) => {
+const PortalContainer = ({ dimensions, setShowPortal, menuItems, borderRadius, children }) => {
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
     const {
         shrinkScreenAnimation,
         restoreScreenAnimation,
         setScrollEnabled,
-        BOOK_EXPAND_FACTOR,
+        EXPAND_FACTOR,
         FADE_SPEED,
         APPEAR_SPEED,
         BLUR_INTENSITY,
@@ -37,7 +37,7 @@ const PortalContainer = ({ dimensions, setShowPortal, menuItems, children }) => 
         useNativeDriver: true,
     });
     const expandBookAnimation = Animated.timing(scaleAnim, {
-        toValue: BOOK_EXPAND_FACTOR,
+        toValue: EXPAND_FACTOR,
         duration: APPEAR_SPEED,
         useNativeDriver: true,
     });
@@ -87,7 +87,7 @@ const PortalContainer = ({ dimensions, setShowPortal, menuItems, children }) => 
 
     const bounce = () => {
         shrinkBookAnimation.start(() => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
             Animated.parallel([
                 expandBookAnimation,
                 opacityAnimation
@@ -180,7 +180,7 @@ const PortalContainer = ({ dimensions, setShowPortal, menuItems, children }) => 
         opacity: opacityAnim,
         height: dimensions.height,
         width: dimensions.width,
-        borderRadius: 5,
+        borderRadius: borderRadius,
     }
 
     return (
