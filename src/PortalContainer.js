@@ -169,6 +169,8 @@ const PortalContainer = ({ dimensions, setShowPortal, menuItems, borderRadius, c
         position: "absolute",
         left: dimensions.x,
         top: dimensions.y,
+        height: dimensions.height,
+        width: dimensions.width,
         transform: [{ scale: scaleAnim }, { translateY: 0 }],
     };
 
